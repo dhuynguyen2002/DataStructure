@@ -1,2 +1,4 @@
 ﻿  Function-with-LL.cpp
-  Function-with-LL.vcxproj -> D:\DataStructure\New folder\Function-with-LL\x64\Debug\Function-with-LL.exe
+D:\DataStructure\New folder\DataStructure\Function-with-LL\Function-with-LL\LinkedList.cpp(154,31): warning C4305: 'argument': truncation from '__int64' to 'int'
+D:\DataStructure\New folder\DataStructure\Function-with-LL\Function-with-LL\LinkedList.cpp(154,20): warning C4309: 'argument': truncation of constant value
+  Function-with-LL.vcxproj -> D:\DataStructure\New folder\DataStructure\Function-with-LL\x64\Debug\Function-with-LL.exe

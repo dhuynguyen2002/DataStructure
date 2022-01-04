@@ -21,6 +21,6 @@ int main()
 	PrintNode(llist->head);
 	llist->Delete(4, true);
 	PrintNode(llist->head);
-	
+	cout << llist->NodeAt(2)->data;
 }
 

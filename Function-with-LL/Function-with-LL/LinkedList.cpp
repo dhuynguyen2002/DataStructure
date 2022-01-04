@@ -3,7 +3,7 @@
 
 struct Node
 {
-	int data;
+	int data = 0;
 	Node* next = NULL;
 
 	Node(int _data) : data(_data) {};
@@ -27,6 +27,12 @@ public:
 	void AppendNode(int data);
 	void PushFrontNode(int data);
 	void InsertNode(int pos, int data);
+	
+	//SORT
+	void QuickSort(bool lower);
+
+	//GET NODE
+	Node* NodeAt(int index);
 
 	//DELETE
 	void Delete(int key, bool multi);
@@ -105,6 +111,7 @@ inline void LinkedList::Delete(int key, bool multi)
 				cNode = pNode;
 
 			}
+			len--;
 			delete temp;
 			if (!multi) return;
 		}
@@ -116,8 +123,7 @@ inline void LinkedList::Delete(int key, bool multi)
 	}
 }
 
-
-// O(n)
+//O(n)
 inline void PrintNode(Node* head) 
 {
 	while (head != NULL)
@@ -126,4 +132,32 @@ inline void PrintNode(Node* head)
 		head = head->next;
 	}
 	std::cout << std::endl;
+}
+
+//O(n)
+inline bool SearchEle(Node* head, int key)
+{
+	while (head != NULL)
+	{
+		if (head->data == key)
+			return true;
+	}
+	return false;
+}
+
+inline Node* LinkedList::NodeAt(int index)
+{
+	Node* temp = head;
+	while (index--)
+	{
+		if (temp == NULL) 
+			return new Node(6969696969);
+		temp = temp->next;
+	}
+	return temp;
+}
+
+inline void LinkedList::QuickSort(bool isLower)
+{
+
 }
