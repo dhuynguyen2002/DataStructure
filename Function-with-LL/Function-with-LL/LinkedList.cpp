@@ -1,163 +1,136 @@
-#include <iostream>
+//Simply put, when you want to use algorithms that requires random access, forget linked list.
+//When you want to use algorithms that requires heavy insertionand removal, forget arrays.
 #include <cmath>
-
+#include<iostream>
+template <typename T>
 struct Node
 {
-	int data = 0;
+	T data;
 	Node* next = NULL;
-
-	Node(int _data) : data(_data) {};
+	Node* prev = NULL;
 };
 
-class LinkedList
+template <typename T>
+bool cmp(T const& t1, T const& t2)
+{
+	return t1 > t2;
+}
+
+template <typename T>
+class DLList
 {
 private:
-	int len = 0;
-
+	bool isSort = false;
+	int len;
 public:
-	Node* head;
-	LinkedList(int data)
+	Node<T>* head;
+	Node<T>* tail;
+	DLList<T> (T data)
 	{
-		head = new Node(data);
-		len++;
+
+		len = 1;
+		head = new Node<T>;
+		head->data = data;
+		head->next = NULL;
+		head->prev = NULL;
+
+		tail = head;
+	}
+
+	int push_front(T data)
+	{
+		Node<T>* newNode = new Node<T>;
+		newNode->data = data;
+		newNode->next = head;
+
+		head->prev = newNode;
+
+		head = newNode;
+		++len;
+		return 1;
+	}
+
+	int append(T data)
+	{
+		Node<T>* newNode = new Node<T>;
+		newNode->data = data;
+		newNode->prev = tail;
+
+		tail->next = newNode;
+
+		tail = newNode;
+		++len;
+		return 1;
+	}
+
+	int insert(T data, Node<T>*& frNode)
+	{
+		Node<T>* newNode = new Node<T>;
+		newNode->data = data;
+
+		newNode->next = frNode;
+		
+		newNode->prev = frNode->prev;
+		
+		frNode->prev->next = newNode;
+		frNode->prev = newNode;
+
+		++len;
+		return 1;
+	}
+
+	int insert_at(T data, int pos)
+	{
+		if (pos > len + 1|| pos <= 0)
+		{
+			std::cout << "Error Insert" << std::endl;
+			return 0;
+		}
+		if (pos == 1) { push_front(data); return 1; }
+		if (pos == len + 1) { append(data); return 1; }
+		Node<T>* temp = head;
+		for (int i = 1; i < pos; i++)
+			temp = temp->next;
+
+		insert(data, temp);
+		return 1;
+	}
+
+	int insert_Order(T data)
+	{
+		Node<T>* temp = head;
+
+		while (temp != NULL)
+		{
+			
+			if (cmp(temp->data, data))
+			{
+				if (temp == head){ push_front(data); return 1; }	
+				insert(data, temp);
+				return 1;
+			}
+			if (temp == tail)
+			{
+				append(data);
+				return 1;
+			}
+			temp = temp->next;
+		}
+
+		return 0;
 	}
 	
-	int GetLength() { return len; }
-	//INSERT
-	void AppendNode(int data);
-	void PushFrontNode(int data);
-	void InsertNode(int pos, int data);
-	
-	//SORT
-	void QuickSort(bool lower);
+	int getLen() { return len; }
 
-	//GET NODE
-	Node* NodeAt(int index);
-
-	//DELETE
-	void Delete(int key, bool multi);
 };
-// O(n)
-inline void LinkedList::AppendNode(int data) 
+
+template <typename T>
+inline void PrintDLL(DLList<T>& list)
 {
-	Node* newNode = new Node(data);
-	Node* tHead = head;
-	while (tHead->next != NULL)
-		tHead = tHead->next;
-
-	tHead->next = newNode;
-
-	len++;
-}
-
-// O(1)
-inline void LinkedList::PushFrontNode(int data) 
-{
-	Node* newNode = new Node(data);
-	newNode->next = head;
-	head = newNode;
-
-	len++;
-}
-
-//O(n)
-inline void LinkedList::InsertNode(int index, int data)
-{
-	if (index > len)
+	Node<T>* temp = list.head;
+	while (temp != NULL)
 	{
-		std::cout << "Current Length: " << len << " Can't insert invalid position" << std::endl;
-		return;
-	}
-	
-	if (index == 0)
-	{
-		PushFrontNode(data); return;
-	}
-	if (index == len)
-	{
-		AppendNode(data); return;
-	}
-	Node* tHead = head;
-	for (int i = 1; i < len; i++)
-	{
-		if (i == index)
-		{
-			Node* newNode = new Node(data);
-			newNode->next = tHead->next;
-			tHead->next = newNode;
-		}
-		else tHead = tHead->next;
-	}
-}
-
-//O(n)
-inline void LinkedList::Delete(int key, bool multi)
-{
-	Node* cNode = head, * pNode = cNode;
-	while (cNode != NULL)
-	{
-		if (cNode->data == key)
-		{
-			Node* temp = cNode;
-			if (cNode == head)
-			{
-				head = temp->next;
-				cNode = head;
-				pNode = cNode;
-			}
-			else
-			{
-				pNode->next = temp->next;
-				cNode = pNode;
-
-			}
-			len--;
-			delete temp;
-			if (!multi) return;
-		}
-		else
-		{
-			pNode = cNode;
-			cNode = cNode->next;
-		}	
-	}
-}
-
-//O(n)
-inline void PrintNode(Node* head) 
-{
-	while (head != NULL)
-	{
-		std::cout << head->data << " ";
-		head = head->next;
-	}
-	std::cout << std::endl;
-}
-
-//O(n)
-inline bool SearchEle(Node* head, int key)
-{
-	while (head != NULL)
-	{
-		if (head->data == key)
-			return true;
-	}
-	return false;
-}
-
-inline Node* LinkedList::NodeAt(int index)
-{
-	Node* temp = head;
-	while (index--)
-	{
-		if (temp == NULL) 
-			return new Node(6969696969);
+		std::cout << temp->data << " ";
 		temp = temp->next;
 	}
-	return temp;
-}
-
-inline void LinkedList::QuickSort(bool isLower)
-{
-
 }
