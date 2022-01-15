@@ -1,5 +1,3 @@
-
-=======
 #include "LinkedList.cpp"
 
 using namespace std;
@@ -12,6 +10,7 @@ bool cmp(int data1, int data2)
 int main()
 {
 	// I'm here
+	// Something change
 	DLList<int> m(4);
 	m.push_front(2);
 	m.push_front(1);
