@@ -1,3 +1,5 @@
+
+=======
 #include "LinkedList.cpp"
 
 using namespace std;
@@ -9,7 +11,7 @@ bool cmp(int data1, int data2)
 
 int main()
 {
-	//data
+	// I'm here
 	DLList<int> m(4);
 	m.push_front(2);
 	m.push_front(1);
@@ -23,4 +25,5 @@ int main()
 	PrintDLL(m);
 	cout << endl << m.getLen();
 }
+
 
