@@ -45,19 +45,26 @@ void test_delete(DLList<int> &m) {
 	cr(m,1);
 }
 
+
 int main()
 {
 	// I'm here
 	// Something change
-	//16/01/2022
 	DLList<int> m(4);
 	m.push_front(2);
-	m.push_front(1);
-	m.append(7);
-	m.append(10);
-	m.insert_Order(14);
-	m.insert_at(3,7);
-	test_delete(m);
+	m.push_front(8);
+	m.append(3);
+	m.append(1);
+	m.insert_Order(4, cmp);
+	m.insert_at(6,7);
+	//Node<int>* temp = m.head;
+//	MergeSort(temp, 5,cmp);
+	//test_delete(m);
+	PrintDLL(m);
+	m.head = mergeSort(m.head, cmp);
+	cout << endl;
+	PrintDLL(m);
 	cout << endl << m.getLen();
+
 }
 

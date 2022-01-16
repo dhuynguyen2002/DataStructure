@@ -1,6 +1,6 @@
 //Simply put, when you want to use algorithms that requires random access, forget linked list.
 //When you want to use algorithms that requires heavy insertionand removal, forget arrays.
-#include <cmath>
+
 #include<iostream>
 template <typename T>
 struct Node
@@ -8,6 +8,8 @@ struct Node
 	T data;
 	Node* next = NULL;
 	Node* prev = NULL;
+
+	Node(T _data) : data(_data) {};
 };
 
 template <typename T>
@@ -29,18 +31,16 @@ public:
 	{
 
 		len = 1;
-		head = new Node<T>;
-		head->data = data;
+		head = new Node<T>(data);
 		head->next = NULL;
 		head->prev = NULL;
 
 		tail = head;
 	}
-
+	//Insert
 	int push_front(T data)
 	{
-		Node<T>* newNode = new Node<T>;
-		newNode->data = data;
+		Node<T>* newNode = new Node<T>(data);
 		newNode->next = head;
 
 		head->prev = newNode;
@@ -52,8 +52,7 @@ public:
 
 	int append(T data)
 	{
-		Node<T>* newNode = new Node<T>;
-		newNode->data = data;
+		Node<T>* newNode = new Node<T>(data);
 		newNode->prev = tail;
 
 		tail->next = newNode;
@@ -65,8 +64,7 @@ public:
 
 	int insert(T data, Node<T>*& frNode)
 	{
-		Node<T>* newNode = new Node<T>;
-		newNode->data = data;
+		Node<T>* newNode = new Node<T>(data);
 
 		newNode->next = frNode;
 		
@@ -96,7 +94,7 @@ public:
 		return 1;
 	}
 
-	int insert_Order(T data)
+	int insert_Order(T data, bool (*cmp)(T,T))
 	{
 		Node<T>* temp = head;
 
@@ -120,6 +118,7 @@ public:
 		return 0;
 	}
 	
+	//Delete
 	int pop_front() {
 		if(len==0) {
 			std::cout << "List is empty" << std::endl;
@@ -203,7 +202,6 @@ public:
 				temp=temp->prev;
 			}
 		}	
-		len--;
 		if (remove_node(temp)==1) {return 1;}
 		return 0;
 
@@ -223,3 +221,135 @@ inline void PrintDLL(DLList<T>& list)
 		temp = temp->next;
 	}
 }
+//template <typename T>
+//inline Node<T>* midNode(Node<T>* head)
+//{
+//	Node<T>* tortoise = head;
+//	Node<T>* hare = head->next;
+//
+//	while ((tortoise->next != NULL) && (hare != NULL && hare->next != NULL))
+//	{
+//		tortoise = tortoise->next;
+//		hare = hare->next->next;
+//	}
+//
+//	return tortoise;
+//}
+
+//singly linked list
+/*template <typename T>
+inline Node<T>* Merge(Node<T>** head1, Node<T>** head2, bool (*cmp)(T,T))
+{
+	Node<T>* merged = new Node<T>(head1->data);
+	Node<T>* dummy = merged;
+
+	while (head1 != NULL || head2 != NULL)
+	{
+		if (cmp(head1->data, head2->data))
+		{
+			dummy->next = head1;
+			head1 = head1->next;
+			dummy = dummy->next;
+		}
+		else
+		{
+			dummy->next = head2;
+			head2 = head2->next;
+			dummy = dummy->next;
+		}
+
+		dummy = dummy->next;
+	}
+
+	while (head1 != NULL)
+	{
+		merged->next = head1;
+		head1 = head1->next;
+		merged = merged->next;
+	}
+	while (head2 != NULL)
+	{
+		merged->next = head2;
+		head2 = head2->next;
+		merged = merged->next;
+	}
+
+	return merged->next;
+}
+template <typename T>
+inline Node<T>* MergeSort(Node<T>* head,const int len, bool (*cmp)(T,T))
+{
+	if (head->next == NULL)
+		return head;
+	Node<T>* middle = new Node<T>(head->data);
+	Node<T>* head2 = new Node<T>(head->data);
+
+	middle = midNode(head);
+	head2 = middle->next;
+	middle->next = NULL;
+	//head2->prev = NULL;
+
+	Node<T>* sorthead = Merge(&MergeSort(head, len, cmp), &MergeSort(head2, len, cmp), cmp);
+	return sorthead;
+}
+*/
+
+//doubly linked list
+template <typename T>
+inline Node<T>* split(Node<T>* head)
+{
+	Node<T>* fast = head, * slow = head;
+	while (fast->next && fast->next->next)
+	{
+		fast = fast->next->next;
+		slow = slow->next;
+	}
+	Node<T>* temp = slow->next;
+	slow->next = NULL;
+	return temp;
+}
+
+template <typename T>
+inline Node<T>* merge(Node<T>* first, Node<T>* second, bool (*cmp)(T, T))
+{
+	// If first linked list is empty 
+	if (!first)
+		return second;
+
+	// If second linked list is empty 
+	if (!second)
+		return first;
+
+	// Pick the smaller value 
+	if (first->data < second->data)
+	{
+		first->next = merge(first->next, second, cmp);
+		first->next->prev = first;
+		first->prev = NULL;
+		return first;
+	}
+	else
+	{
+		second->next = merge(first, second->next, cmp);
+		second->next->prev = second;
+		second->prev = NULL;
+		return second;
+	}
+}
+
+template <typename T>
+inline Node<T>* mergeSort(Node<T>* head, bool (*cmp)(T, T))
+{
+	if (!head || !head->next)
+		return head;
+	Node<T>* second = split(head);
+
+	// Recur for left and right halves 
+	head = mergeSort(head, cmp);
+	second = mergeSort(second, cmp);
+
+	// Merge the two sorted halves 
+	return merge(head, second, cmp);
+}
+
+

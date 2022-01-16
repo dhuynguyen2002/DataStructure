@@ -1,654 +1,180 @@
 
-#include <time.h>
-#include <iostream>
-#include <iomanip>
-using namespace std;
+//#include<bits/stdc++.h>
+//
+//using namespace std;
+//
+//struct haha
+//{
+//	int da1;
+//	string da2;
+//};
+//
+//bool cmp1(haha t1, haha t2)
+//{
+//	return t1.da1 > t2.da1;
+//}
+//
+//template<typename T>
+//struct something
+//{
+//	T data;
+//};
+//
+//
+//bool cmp2(haha a1, haha a2)
+//{
+//	return a1.da2 > a2.da2;
+//}
+//template<typename T>
+//bool CompareString(T a1, T a2, bool (*cmp)(T,T))
+//{
+//	return cmp(a1, a2);
+//}
+//
+//int main()
+//{
+//	something<haha> a, b;
+//	a.data.da1 = 5;
+//	b.data.da1 = 2;
+//	
+//	a.data.da2 = "aaaaaaa";
+//	b.data.da2 = "sdafadf";
+//	
+//	cout << CompareString(a.data, b.data, cmp1);
+//	cout << CompareString(a.data, b.data, cmp2);
+//}
 
-struct Node
+// C++ program for merge sort on doubly linked list 
+#include <bits/stdc++.h>
+using namespace std;
+class Node
 {
-	int n;
-	Node* next = NULL;
-	Node(int num) : n(num) {};
+public:
+    int data;
+    Node* next, * prev;
 };
 
-void append(Node** head_ref, int new_data, bool b)
+Node* split(Node* head);
+
+// Function to merge two linked lists 
+Node* merge(Node* first, Node* second)
 {
-	clock_t start = clock();
+    // If first linked list is empty 
+    if (!first)
+        return second;
 
-	/* 1. allocate node */
-	Node* new_node = new Node(new_data);
+    // If second linked list is empty 
+    if (!second)
+        return first;
 
-	Node* last = *head_ref; /* used in step 5*/
-
-	/* 3. This new node is going to be
-	the last node, so make next of
-	it as NULL*/
-	new_node->next = NULL;
-
-	/* 4. If the Linked List is empty,
-	then make the new node as head */
-	if (*head_ref == NULL)
-	{
-		*head_ref = new_node;
-		return;
-	}
-
-	/* 5. Else traverse till the last node */
-	while (last->next != NULL)
-	{
-		last = last->next;
-	}
-
-	/* 6. Change the next of last node */
-	last->next = new_node;
-
-	clock_t ends = clock();
-	double time_taken = ((double)ends - start) / CLOCKS_PER_SEC;
-	if (b)
-		cout << "Duration with two *: " << time_taken << endl;
-
-	return;
+    // Pick the smaller value 
+    if (first->data < second->data)
+    {
+        first->next = merge(first->next, second);
+        first->next->prev = first;
+        first->prev = NULL;
+        return first;
+    }
+    else
+    {
+        second->next = merge(first, second->next);
+        second->next->prev = second;
+        second->prev = NULL;
+        return second;
+    }
 }
 
-void append2(Node* head, int data, bool b)
+// Function to do merge sort 
+Node* mergeSort(Node* head)
 {
-	clock_t start = clock();
+    if (!head || !head->next)
+        return head;
+    Node* second = split(head);
 
-	Node* newNode = new Node(data);
-	while (head->next != NULL)
-		head = head->next;
+    // Recur for left and right halves 
+    head = mergeSort(head);
+    second = mergeSort(second);
 
-	head->next = newNode;
-
-	clock_t ends = clock();
-	double time_taken = ((double)ends - start) / CLOCKS_PER_SEC;
-	if (b)
-		cout << "Duration with one *: " << time_taken << endl;
-
+    // Merge the two sorted halves 
+    return merge(head, second);
 }
 
-
-int main()
+// A utility function to insert a new node at the 
+// beginning of doubly linked list 
+void insert(Node** head, int data)
 {
-	Node* head = new Node(5);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false); append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false); append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false); append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false); append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false); append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false); append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false); append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false); append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false); append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false); append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-	append(&head, 2, false);
-
-	Node* secondHead = new Node(7);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false); append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false); append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false); append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false); append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false); append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false); append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false); append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false); append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false); append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false); append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-	append2(secondHead, 4, false);
-
-
-	append(&head, 5, true);
-	append2(head, 6, true);
-	return 0;
+    Node* temp = new Node();
+    temp->data = data;
+    temp->next = temp->prev = NULL;
+    if (!(*head))
+        (*head) = temp;
+    else
+    {
+        temp->next = *head;
+        (*head)->prev = temp;
+        (*head) = temp;
+    }
 }
+
+// A utility function to print a doubly linked list in 
+// both forward and backward directions 
+void print(Node* head)
+{
+    Node* temp = head;
+    cout << "Forward Traversal using next pointer\n";
+    while (head)
+    {
+        cout << head->data << " ";
+        temp = head;
+        head = head->next;
+    }
+    cout << "\nBackward Traversal using prev pointer\n";
+    while (temp)
+    {
+        cout << temp->data << " ";
+        temp = temp->prev;
+    }
+}
+
+// Utility function to swap two integers 
+void swap(int* A, int* B)
+{
+    int temp = *A;
+    *A = *B;
+    *B = temp;
+}
+
+// Split a doubly linked list (DLL) into 2 DLLs of 
+// half sizes 
+Node* split(Node* head)
+{
+    Node* fast = head, * slow = head;
+    while (fast->next && fast->next->next)
+    {
+        fast = fast->next->next;
+        slow = slow->next;
+    }
+    Node* temp = slow->next;
+    slow->next = NULL;
+    return temp;
+}
+
+// Driver program 
+int main(void)
+{
+    Node* head = NULL;
+    insert(&head, 5);
+    insert(&head, 20);
+    insert(&head, 4);
+    insert(&head, 3);
+    insert(&head, 30);
+    insert(&head, 10);
+    head = mergeSort(head);
+    cout << "Linked List after sorting\n";
+    print(head);
+    return 0;
+}
+
+// This is code is contributed by rathbhupendra
+
 
