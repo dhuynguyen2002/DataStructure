@@ -120,6 +120,95 @@ public:
 		return 0;
 	}
 	
+	int pop_front() {
+		if(len==0) {
+			std::cout << "List is empty" << std::endl;
+			return 0;
+		}
+		if(head == tail ) {
+			delete head;
+			head = tail = NULL;
+			len--;
+			return 1;
+		}
+		Node<T>* temp = head;
+		head = head->next;
+		head -> prev = NULL;
+		delete temp;
+		
+		len--;
+		return 1;
+	}
+	
+	int pop_back() {
+		if(len==0) {
+			std::cout << "List is empty" << std::endl;
+			return 0;
+		}
+		if(head == tail ) {
+			delete head;
+			head = tail = NULL;
+			len--;
+			return 1;
+		}
+		Node<T>* temp = tail;
+		tail = tail->prev;
+		tail -> next = NULL;
+		delete temp;
+		
+		len--;
+		
+		return 1;
+	}
+	
+	int remove_node(Node<T>* node) {
+		if(node == NULL) { 
+			std::cout << "Node does not exist" << std::endl;
+			return 0; 
+		}
+		if(node == head) { pop_front(); return 1; };
+		if(node == tail) { pop_back(); return 1; };
+
+		
+		node->prev->next = node ->next;
+		node->next->prev = node ->prev;
+		
+		delete node;
+				
+		len--;
+		return 1;
+		
+	}
+	
+	int remove_at(int pos) {
+		if(len==0) {
+			std::cout << "List is empty" << std::endl;
+			return 0;
+		}
+		if(pos<0 || pos >=len) {
+			std::cout << "Out of range" << std::endl;
+			return 0;
+		}
+		if(pos==0) { pop_front(); return 1; }
+		if(pos==len-1) { pop_back(); return 1; }
+		Node<T>* temp;
+		if(pos<=len/2) {
+			temp = head;
+			for(int i=1; i<=pos; ++i) {
+				temp=temp->next;
+			}
+		} else {
+			temp = tail;
+			for(int i=len-1; i>pos; --i) {
+				temp=temp->prev;
+			}
+		}	
+		len--;
+		if (remove_node(temp)==1) {return 1;}
+		return 0;
+
+	}
+	
 	int getLen() { return len; }
 
 };
