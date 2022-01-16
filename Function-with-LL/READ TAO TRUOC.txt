@@ -1,4 +1,0 @@
-*Hàm hiện có cho LinkedList:
-+ thêm đầu, cuối, bất kì vị trí Node trog LL
-+ xóa bất kì dựa vào value (xóa 1 phần tử hoặc xóa toàn bộ)
-+ In các phần tử
