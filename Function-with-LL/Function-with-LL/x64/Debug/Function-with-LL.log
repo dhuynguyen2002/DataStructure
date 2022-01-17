@@ -1,2 +1,5 @@
 ﻿  Function-with-LL.cpp
-  Function-with-LL.vcxproj -> D:\DataStructure\New folder\DataStructure\Function-with-LL\x64\Debug\Function-with-LL.exe
+  LinkedList.cpp
+  Generating Code...
+  LINK : D:\DataStructure\New folder\CTDL\DataStructure\.git\DataStructure\Function-with-LL\x64\Debug\Function-with-LL.exe not found or not built by the last incremental link; performing full link
+  Function-with-LL.vcxproj -> D:\DataStructure\New folder\CTDL\DataStructure\.git\DataStructure\Function-with-LL\x64\Debug\Function-with-LL.exe
