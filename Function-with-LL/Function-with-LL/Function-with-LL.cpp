@@ -27,6 +27,8 @@ int main()
 	DLList<int> curr=m.find_all(4);
 	cout << "list of find: ";
 	PrintDLL(curr);
+	Node<int>* node = m.find_node(2);
+	cout << node->data;
 	cout << endl;
 	PrintDLL(m);
 }
