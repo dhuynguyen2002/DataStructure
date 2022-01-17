@@ -36,7 +36,7 @@ void test_delete(DLList<int> &m) {
 	cr(m, temp);
 	cr(m, 4);
 	cr(m, 0);
-	cr(m, m.getLen()-1);
+	cr(m, m.size()-1);
 	cr(m, 1);
 	cr(m, 3);
 	cr(m, -1);
@@ -52,9 +52,9 @@ int main()
 	DLList<int> m(4);
 	m.push_front(2);
 	m.push_front(8);
-	m.append(3);
-	m.append(1);
-	m.insert_Order(4, cmp);
+	m.push_back(3);
+	m.push_back(1);
+	m.insert_order(4, cmp);
 	m.insert_at(6,7);
 	//Node<int>* temp = m.head;
 //	MergeSort(temp, 5,cmp);
@@ -63,11 +63,4 @@ int main()
 	m.head = mergeSort(m.head, cmp);
 	cout << endl;
 	PrintDLL(m);
-	m.push_front(1);
-	m.append(7);
-	m.append(10);
-	m.insert_Order(14);
-	m.insert_at(3,7);
-	test_delete(m);
-	cout << endl << m.getLen();
 }
