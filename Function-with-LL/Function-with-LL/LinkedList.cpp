@@ -1,6 +1,8 @@
 //Simply put, when you want to use algorithms that requires random access, forget linked list.
 //When you want to use algorithms that requires heavy insertionand removal, forget arrays.
 
+#include <cmath>
+
 #include<iostream>
 template <typename T>
 struct Node
@@ -32,6 +34,8 @@ public:
 
 		len = 1;
 		head = new Node<T>(data);
+		head = new Node<T>;
+		head->data = data;
 		head->next = NULL;
 		head->prev = NULL;
 
@@ -41,6 +45,11 @@ public:
 	int push_front(T data)
 	{
 		Node<T>* newNode = new Node<T>(data);
+
+	int push_front(T data)
+	{
+		Node<T>* newNode = new Node<T>;
+		newNode->data = data;
 		newNode->next = head;
 
 		head->prev = newNode;
@@ -53,6 +62,8 @@ public:
 	int append(T data)
 	{
 		Node<T>* newNode = new Node<T>(data);
+		Node<T>* newNode = new Node<T>;
+		newNode->data = data;
 		newNode->prev = tail;
 
 		tail->next = newNode;
@@ -65,6 +76,8 @@ public:
 	int insert(T data, Node<T>*& frNode)
 	{
 		Node<T>* newNode = new Node<T>(data);
+		Node<T>* newNode = new Node<T>;
+		newNode->data = data;
 
 		newNode->next = frNode;
 		
@@ -95,6 +108,7 @@ public:
 	}
 
 	int insert_Order(T data, bool (*cmp)(T,T))
+	int insert_Order(T data)
 	{
 		Node<T>* temp = head;
 
@@ -118,6 +132,7 @@ public:
 		return 0;
 	}
 	
+
 	//Delete
 	int pop_front() {
 		if(len==0) {
@@ -202,6 +217,7 @@ public:
 				temp=temp->prev;
 			}
 		}	
+		len--;
 		if (remove_node(temp)==1) {return 1;}
 		return 0;
 
@@ -221,6 +237,7 @@ inline void PrintDLL(DLList<T>& list)
 		temp = temp->next;
 	}
 }
+
 //template <typename T>
 //inline Node<T>* midNode(Node<T>* head)
 //{
@@ -351,5 +368,6 @@ inline Node<T>* mergeSort(Node<T>* head, bool (*cmp)(T, T))
 	// Merge the two sorted halves 
 	return merge(head, second, cmp);
 }
+
 
 

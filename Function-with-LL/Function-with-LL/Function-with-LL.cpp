@@ -45,7 +45,6 @@ void test_delete(DLList<int> &m) {
 	cr(m,1);
 }
 
-
 int main()
 {
 	// I'm here
@@ -64,7 +63,11 @@ int main()
 	m.head = mergeSort(m.head, cmp);
 	cout << endl;
 	PrintDLL(m);
+	m.push_front(1);
+	m.append(7);
+	m.append(10);
+	m.insert_Order(14);
+	m.insert_at(3,7);
+	test_delete(m);
 	cout << endl << m.getLen();
-
 }
-
