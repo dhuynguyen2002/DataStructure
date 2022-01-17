@@ -7,11 +7,47 @@ bool cmp(int data1, int data2)
 	return data1 > data2;
 }
 
+struct abc {
+	int a;
+	string b;
+};
+
+void cr(DLList<int> &m, int pos) {
+	if(!m.remove_at(pos)) { return; };
+	cout << "After remove at " << pos << " :";
+	PrintDLL(m);
+	cout << endl;
+}
+
+void cr(DLList<int> &m, Node<int> *node) {
+	if(!m.remove_node(node)) { return; }
+	cout << "After remove Node: ";
+	PrintDLL(m);
+	cout << endl;
+}
+
+void test_delete(DLList<int> &m) {
+	cout << "Before remove:";
+	PrintDLL(m);
+	cout << endl;
+	Node<int> *temp = m.head; 
+	cr(m, temp->next->next);
+	temp = m.head;
+	cr(m, temp);
+	cr(m, 4);
+	cr(m, 0);
+	cr(m, m.size()-1);
+	cr(m, 1);
+	cr(m, 3);
+	cr(m, -1);
+	cr(m,m.tail);
+	cr(m,m.head);
+	cr(m,1);
+}
 
 int main()
 {
-	//19:15
-	//vlxx.non
+	//sadfasdfksadfksdaflsd
 	DLList<int> m(4);
 	m.push_front(2);
 	m.push_front(8);
@@ -24,11 +60,13 @@ int main()
 	//test_delete(m);
 	PrintDLL(m);
 	m.head = mergeSort(m.head, cmp);
-	DLList<int> curr=m.find_all(4);
-	cout << "list of find: ";
-	PrintDLL(curr);
-	Node<int>* node = m.find_node(2);
-	cout << node->data;
 	cout << endl;
 	PrintDLL(m);
+	cout << endl;
+	Node<int>* temp = m.find_node(0);
+	if(temp!=NULL) cout << "Find: " << temp->data;
+	DLList<int> Find = m.find_all(1);
+	cout << "List find: ";
+	PrintDLL(Find);
+	cout << endl << m.size();
 }
