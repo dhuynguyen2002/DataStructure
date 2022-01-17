@@ -1,8 +1,6 @@
 //Simply put, when you want to use algorithms that requires random access, forget linked list.
 //When you want to use algorithms that requires heavy insertionand removal, forget arrays.
 
-#include <cmath>
-
 #include<iostream>
 template <typename T>
 struct Node
@@ -120,19 +118,24 @@ public:
 		return 0;
 	}
 	
-
 	//Delete
-	int pop_front() {
-		if(len==0) {
+	int pop_front() 
+	{
+		if(len==0) 
+		{	
 			std::cout << "List is empty" << std::endl;
 			return 0;
+
 		}
-		if(head == tail ) {
+		
+		if(head == tail) 
+		{	
 			delete head;
 			head = tail = NULL;
 			len--;
 			return 1;
 		}
+		
 		Node<T>* temp = head;
 		head = head->next;
 		head -> prev = NULL;
@@ -143,16 +146,20 @@ public:
 	}
 	
 	int pop_back() {
-		if(len==0) {
+		if(len==0) 
+		{
 			std::cout << "List is empty" << std::endl;
 			return 0;
 		}
-		if(head == tail ) {
+		
+		if(head == tail ) 
+		{
 			delete head;
 			head = tail = NULL;
 			len--;
 			return 1;
 		}
+		
 		Node<T>* temp = tail;
 		tail = tail->prev;
 		tail -> next = NULL;
@@ -163,8 +170,10 @@ public:
 		return 1;
 	}
 	
-	int remove_node(Node<T>* node) {
-		if(node == NULL) { 
+	int remove_node(Node<T>* node) 
+	{
+		if(node == NULL) 
+		{ 
 			std::cout << "Node does not exist" << std::endl;
 			return 0; 
 		}
@@ -182,49 +191,58 @@ public:
 		
 	}
 	
-	int remove_at(int pos) {
-		if(len==0) {
+	int remove_at(int pos) 
+	{
+		if(len==0) 
+		{
 			std::cout << "List is empty" << std::endl;
 			return 0;
 		}
-		if(pos<0 || pos >=len) {
+		if(pos<1 || pos>len) 
+		{
 			std::cout << "Out of range" << std::endl;
 			return 0;
 		}
 		if(pos==0) { pop_front(); return 1; }
-		if(pos==len-1) { pop_back(); return 1; }
+		if(pos==len) { pop_back(); return 1; }
 		Node<T>* temp;
-		if(pos<=len/2) {
+		
+		if(pos<=len/2) 
+		{
 			temp = head;
-			for(int i=1; i<=pos; ++i) {
+			for(int i=2; i<=pos; ++i) 
+			{
 				temp=temp->next;
 			}
-		} else {
+		} 
+		else 
+		{
 			temp = tail;
-			for(int i=len-1; i>pos; --i) {
+			for(int i=len; i>=pos; --i) 
+			{
 				temp=temp->prev;
 			}
 		}	
-		len--;
-		if (remove_node(temp)==1) {return 1;}
+		if (remove_node(temp)==1) { return 1; }
 		return 0;
 
 	}
 	
 	int size() { return len; }
-	
-	Node<T> *find_node(T element)
+
+
+	//Search
+	Node<T>* find_node(T element) 
 	{
-		if (len == 0)
+		if(len==0) 
 		{
 			std::cout << "List is empty" << std::endl;
 			return NULL;
 		}
-		Node<T> *curr =head;
-		while (curr != NULL)
+		Node<T>* curr = head;
+		while(curr!=NULL) 
 		{
-			if (curr->data == element)
-			{
+			if(curr->data == element) {
 				return curr;
 			}
 			curr = curr->next;
@@ -233,43 +251,45 @@ public:
 		return NULL;
 	}
 	
-	DLList<T> find_all(T element)
-	{
+	DLList<T> find_all(T element) {	
 		DLList<T> res(0);
 		res.head = res.tail = NULL;
-		res.len = 0;
-		if (len == 0)
+		res.len=0;
+		if(len==0) 
 		{
 			std::cout << "List is empty" << std::endl;
 			return res;
 		}
-	
-		Node<T> *curr = head;
-		while (curr != NULL)
+		
+		Node<T>* curr = head;
+		while(curr!=NULL) 
 		{
-			if (curr->data == element)
+			if(curr->data == element) 
 			{
-				if (res.head == NULL)
+				if(res.head == NULL) 
 				{
 					Node<T> *temp = new Node<T>(curr->data);
 					res.head = res.tail = temp;
-					res.len = 1;
-				}
-				else
+					res.len=1;
+				} 
+				else 
 				{
 					res.push_back(curr->data);
 				}
 			}
 			curr = curr->next;
 		}
-		if (res.len == 0)
+		if(res.len==0) 
 		{
 			std::cout << "Nodes does not exist" << std::endl;
 		}
 		return res;
 	}
-
+	
 };
+
+
+
 
 template <typename T>
 inline void PrintDLL(DLList<T>& list)
@@ -281,7 +301,6 @@ inline void PrintDLL(DLList<T>& list)
 		temp = temp->next;
 	}
 }
-
 //template <typename T>
 //inline Node<T>* midNode(Node<T>* head)
 //{
@@ -303,6 +322,7 @@ inline Node<T>* Merge(Node<T>** head1, Node<T>** head2, bool (*cmp)(T,T))
 {
 	Node<T>* merged = new Node<T>(head1->data);
 	Node<T>* dummy = merged;
+
 	while (head1 != NULL || head2 != NULL)
 	{
 		if (cmp(head1->data, head2->data))
@@ -317,8 +337,10 @@ inline Node<T>* Merge(Node<T>** head1, Node<T>** head2, bool (*cmp)(T,T))
 			head2 = head2->next;
 			dummy = dummy->next;
 		}
+
 		dummy = dummy->next;
 	}
+
 	while (head1 != NULL)
 	{
 		merged->next = head1;
@@ -331,6 +353,7 @@ inline Node<T>* Merge(Node<T>** head1, Node<T>** head2, bool (*cmp)(T,T))
 		head2 = head2->next;
 		merged = merged->next;
 	}
+
 	return merged->next;
 }
 template <typename T>
@@ -340,10 +363,12 @@ inline Node<T>* MergeSort(Node<T>* head,const int len, bool (*cmp)(T,T))
 		return head;
 	Node<T>* middle = new Node<T>(head->data);
 	Node<T>* head2 = new Node<T>(head->data);
+
 	middle = midNode(head);
 	head2 = middle->next;
 	middle->next = NULL;
 	//head2->prev = NULL;
+
 	Node<T>* sorthead = Merge(&MergeSort(head, len, cmp), &MergeSort(head2, len, cmp), cmp);
 	return sorthead;
 }
@@ -406,3 +431,5 @@ inline Node<T>* mergeSort(Node<T>* head, bool (*cmp)(T, T))
 	// Merge the two sorted halves 
 	return merge(head, second, cmp);
 }
+
+
